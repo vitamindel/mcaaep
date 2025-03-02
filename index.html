@@ -16,7 +16,7 @@
 <body class="bg-gray-50">
 
 <nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container">
+    <div class="container mx-auto px-4">
         <a class="navbar-brand" href="#">AEP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -35,7 +35,7 @@
 </nav>
 
 <header class="hero bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
-    <div class="container">
+    <div class="container mx-auto px-4">
         <div class="text-white">
             <h1>Empowering Future<br>Leaders</h1>
             <p>Join us in shaping the future of business and entrepreneurship through innovative education and real-world experience.</p>
@@ -48,7 +48,7 @@
 </header>
 
 <section id="about" class="py-20">
-    <div class="container">
+    <div class="container mx-auto px-4">
         <div class="text-center mb-16">
             <h2 data-aos="fade-up">What is AEP?</h2>
         </div>
@@ -110,8 +110,8 @@
     </div>
 </section>
 
-<section id="features" class="py-20 bg-gray-100">
-    <div class="container">
+<section id="features" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
         <h2 class="text-center mb-16" data-aos="fade-up">What We Offer</h2>
         <div class="row">
             <div class="col-md-4 mb-8" data-aos="fade-up" data-aos-delay="100">
@@ -152,7 +152,7 @@
 </section>
 
 <section id="testimonials" class="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
-    <div class="container">
+    <div class="container mx-auto px-4">
         <h2 class="text-center mb-16" data-aos="fade-up">What People Say</h2>
         
         <div class="testimonials-carousel position-relative overflow-hidden" data-aos="fade-up">
@@ -264,8 +264,8 @@
     </div>
 </section>
 
-<section id="events" class="py-20 bg-gray-100">
-    <div class="container">
+<section id="events" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
         <h2 class="text-center mb-16" data-aos="fade-up">Upcoming Events</h2>
         <div class="row">
             <div class="col-lg-4 mb-8" data-aos="fade-up" data-aos-delay="100">
@@ -326,7 +326,7 @@
 </section>
 
 <section id="blogs" class="py-20">
-    <div class="container">
+    <div class="container mx-auto px-4">
         <h2 class="text-center mb-16" data-aos="fade-up">Latest Insights</h2>
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-8" data-aos="fade-up" data-aos-delay="100">
@@ -372,8 +372,8 @@
     </div>
 </section>
 
-<section id="contact" class="py-20 bg-gray-100">
-    <div class="container">
+<section id="contact" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
         <h2 class="text-center mb-16" data-aos="fade-up">Get in Touch</h2>
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -408,7 +408,7 @@
 </section>
 
 <footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-24">
-    <div class="container">
+    <div class="container mx-auto px-4">
         <div class="row mb-16">
             <div class="col-lg-5 mb-8 mb-lg-0">
                 <div class="pr-lg-5">
@@ -556,37 +556,105 @@ document.addEventListener('DOMContentLoaded', function() {
     const track = document.querySelector('.testimonials-track');
     const items = document.querySelectorAll('.testimonial-item');
     const dots = document.querySelectorAll('[data-index]');
-    let currentIndex = 1; // Start with the second item centered
-
+    const itemCount = items.length;
+    let currentIndex = 0;
+    
+    // Clone first items and append to end for infinite loop effect
+    const firstItemsClone = Array.from(items).slice(0, 3).map(item => {
+        const clone = item.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        return clone;
+    });
+    
+    firstItemsClone.forEach(clone => {
+        track.appendChild(clone);
+    });
+    
     // Initialize
     updateCarousel();
+    
+    // Set first dot as active initially
+    dots[0].classList.add('bg-blue-500');
+    dots[0].classList.remove('bg-gray-300');
 
-    // Auto scroll
-    setInterval(() => {
-        currentIndex = (currentIndex + 1) % items.length;
-        updateCarousel();
-    }, 5000);
+    // Auto scroll - set to rotate every 4 seconds
+    function startAutoScroll() {
+        return setInterval(() => {
+            currentIndex = (currentIndex + 1) % itemCount;
+            updateCarousel();
+        }, 4000); // 4 seconds per testimonial
+    }
+    
+    // Start auto-scrolling
+    let autoScrollInterval = startAutoScroll();
 
-    // Dot navigation
+    // Dot navigation - pause auto-scroll when user interacts
     dots.forEach(dot => {
         dot.addEventListener('click', () => {
+            // Clear the existing interval
+            clearInterval(autoScrollInterval);
+            
+            // Set to the selected index
             currentIndex = parseInt(dot.dataset.index);
             updateCarousel();
+            
+            // Restart auto-scrolling after user interaction
+            autoScrollInterval = startAutoScroll();
         });
     });
 
+    // Pause auto-scroll when hovering over carousel
+    const carousel = document.querySelector('.testimonials-carousel');
+    carousel.addEventListener('mouseenter', () => {
+        clearInterval(autoScrollInterval);
+    });
+    
+    // Resume auto-scroll when mouse leaves carousel
+    carousel.addEventListener('mouseleave', () => {
+        autoScrollInterval = startAutoScroll();
+    });
+
     function updateCarousel() {
-        const translateX = -(currentIndex * 33.333333);
+        // Calculate visible items based on screen size
+        let visibleItems = 3;
+        if (window.innerWidth < 992 && window.innerWidth >= 768) {
+            visibleItems = 2;
+        } else if (window.innerWidth < 768) {
+            visibleItems = 1;
+        }
+        
+        // Calculate the center position
+        const centerPosition = Math.floor(visibleItems / 2);
+        
+        // Calculate translateX value based on current index and visible items
+        let translateX;
+        if (visibleItems === 1) {
+            translateX = -currentIndex * 100;
+        } else {
+            // For multiple visible items, center the active item
+            translateX = -(currentIndex - centerPosition) * (100 / visibleItems);
+            
+            // Adjust for edge cases
+            if (currentIndex < centerPosition) {
+                translateX = 0;
+            } else if (currentIndex >= itemCount - centerPosition) {
+                translateX = -((itemCount - visibleItems) * (100 / visibleItems));
+            }
+        }
+        
+        // Apply transform with smooth animation
+        track.style.transition = 'transform 0.5s ease-in-out';
         track.style.transform = `translateX(${translateX}%)`;
 
-        // Update active states
+        // Update active states for items
         items.forEach((item, index) => {
             item.classList.remove('active', 'prev', 'next');
+            
             if (index === currentIndex) {
                 item.classList.add('active');
-            } else if (index === (currentIndex - 1 + items.length) % items.length) {
+            } else if (index === (currentIndex - 1 + itemCount) % itemCount) {
                 item.classList.add('prev');
-            } else if (index === (currentIndex + 1) % items.length) {
+            } else if (index === (currentIndex + 1) % itemCount) {
                 item.classList.add('next');
             }
         });
@@ -597,6 +665,9 @@ document.addEventListener('DOMContentLoaded', function() {
             dot.classList.toggle('bg-gray-300', index !== currentIndex);
         });
     }
+    
+    // Handle window resize
+    window.addEventListener('resize', updateCarousel);
 });
 </script>
 </body>
