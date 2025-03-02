@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Building a Strong Business Network</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #3498db, #8e44ad);
+            border-radius: 10px;
+            border: 3px solid #f1f5f9;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #2980b9, #8e44ad);
+        }
+        
+        /* Firefox */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #3498db #f1f5f9;
+        }
+        
+        .navbar {
+            background-color: transparent;
+            padding: 15px 0;
+            transition: all 0.3s ease-in-out;
+            z-index: 1000;
+        }
+        
+        .navbar.scrolled {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled .nav-link {
+            color: #333 !important;
+        }
+        
+        .navbar .nav-link:hover {
+            color: white !important;
+        }
+        
+        .navbar.scrolled .nav-link:hover {
+            color: #3498db !important;
+        }
+        
+        .navbar .navbar-brand {
+            color: white;
+            font-weight: 700;
+        }
+        
+        .navbar.scrolled .navbar-brand {
+            color: #333;
+        }
+        
+        .navbar-toggler {
+            border: none;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+        }
+        
+        .navbar.scrolled .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+        }
+        
+        .blog-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-content h2 {
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .blog-content img {
+            margin: 2rem 0;
+        }
+        
+        .blog-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+            margin-bottom: 3rem;
+        }
+        
+        .author-info {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .quote-block {
+            border-left: 5px solid #3498db;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        .related-posts {
+            background: linear-gradient(rgba(240, 248, 255, 0.9), rgba(248, 249, 250, 0.9)), url('https://images.unsplash.com/photo-1550305080-4e029753abcf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 5rem 0;
+            margin-top: 4rem;
+            position: relative;
+        }
+        
+        .related-posts:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #3498db, #8e44ad);
+        }
+        
+        .related-posts h2 {
+            font-weight: 700;
+            color: #2c3e50;
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+        
+        .related-posts h2:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #3498db, #8e44ad);
+        }
+        
+        .related-posts .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .related-posts .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .related-posts .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .related-posts .card-body {
+            padding: 1.75rem;
+        }
+        
+        .related-posts .card-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .related-posts .card-text {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+        }
+        
+        .related-posts .btn-outline-primary {
+            border-color: #3498db;
+            color: #3498db;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .related-posts .btn-outline-primary:hover {
+            background: linear-gradient(to right, #3498db, #8e44ad);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        @media (max-width: 767px) {
+            .related-posts .card {
+                margin-bottom: 2rem;
+            }
+        }
+        
+        .tip-box {
+            background-color: #e8f4fd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 5px solid #3498db;
+        }
+        
+        .steps-container {
+            counter-reset: step-counter;
+            margin: 2rem 0;
+        }
+        
+        .step-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-item:before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #3498db;
+            color: white;
+            width: 2.2rem;
+            height: 2.2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold" href="index.html">AEP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#team">Team</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#events">Events</a></li>
+                <li class="nav-item"><a class="nav-link font-weight-bold" href="index.html#blogs">Insights</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Blog Header -->
+<header class="blog-header">
+    <div class="container text-center text-white">
+        <h1 class="display-4 font-weight-bold">Building a Strong Business Network</h1>
+        <p class="lead mt-3">Strategic approaches to creating and nurturing professional connections</p>
+        <div class="mt-4">
+            <span class="mr-3"><i class="far fa-calendar-alt mr-1"></i> February 28, 2024</span>
+            <span class="mr-3"><i class="far fa-user mr-1"></i> By Michael Chen</span>
+            <span><i class="far fa-clock mr-1"></i> 10 min read</span>
+        </div>
+    </div>
+</header>
+
+<!-- Blog Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto blog-content">
+                <p class="lead font-weight-bold">Networking is a crucial skill for entrepreneurs and business professionals, providing opportunities to connect with industry leaders, potential partners, and mentors. In this comprehensive guide, we explore proven strategies for building and maintaining a strong business network.</p>
+                
+                <p>The phrase "it's not what you know, but who you know" highlights the importance of professional relationships in business success. A strong network can open doors to new opportunities, provide valuable insights, and offer support during challenging times. This article delves into the art and science of effective networking in today's business landscape.</p>
+                
+                <div class="tip-box">
+                    <h4 class="mb-3"><i class="fas fa-lightbulb text-primary mr-2"></i> Quick Tip</h4>
+                    <p class="mb-0">Quality trumps quantity when it comes to networking. Focus on building meaningful relationships rather than collecting business cards.</p>
+                </div>
+                
+                <h2>The Importance of Strategic Networking</h2>
+                <p>Networking goes beyond attending events and exchanging contact information. Strategic networking involves intentionally building relationships with individuals who can help you achieve specific business goals and to whom you can provide value in return.</p>
+                
+                <h3 class="mt-4 font-weight-bold">Benefits of a Strong Professional Network</h3>
+                <ul class="mb-4">
+                    <li class="mb-2"><strong>Access to Opportunities:</strong> Your network can alert you to job openings, business partnerships, and investment opportunities before they become public.</li>
+                    <li class="mb-2"><strong>Knowledge Sharing:</strong> Connect with experts who can provide insights and advice on industry trends, challenges, and solutions.</li>
+                    <li class="mb-2"><strong>Increased Visibility:</strong> Active networking raises your professional profile and enhances your reputation within your industry.</li>
+                    <li class="mb-2"><strong>Support System:</strong> A strong network provides emotional and professional support during business challenges and transitions.</li>
+                    <li class="mb-2"><strong>Resource Access:</strong> Your connections can help you access resources, from technical expertise to funding sources.</li>
+                </ul>
+                
+                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Networking Event" class="w-100 rounded-lg shadow">
+                
+                <h2>Effective Networking Strategies</h2>
+                <p>Building a robust professional network requires a strategic approach and consistent effort. Here are proven strategies to enhance your networking effectiveness:</p>
+                
+                <div class="steps-container">
+                    <div class="step-item">
+                        <h4>Identify Your Networking Goals</h4>
+                        <p>Before attending events or reaching out to new contacts, clarify what you hope to achieve. Are you looking for mentorship, seeking investors, exploring job opportunities, or aiming to learn about a specific industry? Having clear goals will help you focus your networking efforts and identify the right connections.</p>
+                    </div>
+                    
+                    <div class="step-item">
+                        <h4>Leverage Both Online and Offline Channels</h4>
+                        <p>Diversify your networking approach by utilizing both digital platforms and in-person events. LinkedIn, industry-specific forums, and professional groups provide valuable online networking opportunities, while conferences, seminars, and local business meetings offer face-to-face interaction.</p>
+                    </div>
+                    
+                    <div class="step-item">
+                        <h4>Perfect Your Elevator Pitch</h4>
+                        <p>Develop a concise, compelling introduction that clearly communicates who you are, what you do, and what makes you unique. Your elevator pitch should be memorable and adaptable for different networking contexts.</p>
+                    </div>
+                    
+                    <div class="step-item">
+                        <h4>Focus on Giving, Not Just Taking</h4>
+                        <p>Approach networking with a mindset of generosity. Look for ways to provide value to your connections before asking for favors. Sharing resources, making introductions, or offering your expertise builds goodwill and strengthens relationships.</p>
+                    </div>
+                </div>
+                
+                <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Business Meeting" class="w-100 rounded-lg shadow">
+                
+                <h3 class="mt-4 font-weight-bold">Digital Networking Platforms</h3>
+                <p>In today's interconnected world, digital platforms have become essential networking tools. Here's how to maximize their potential:</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fab fa-linkedin text-primary mr-2"></i>LinkedIn</h5>
+                                <p class="card-text">The premier professional networking platform. Optimize your profile, engage with industry content, join relevant groups, and regularly share valuable insights.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-users text-primary mr-2"></i>Industry Forums</h5>
+                                <p class="card-text">Participate in specialized online communities related to your field. Answer questions, share expertise, and establish yourself as a knowledgeable resource.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fab fa-twitter text-primary mr-2"></i>Twitter</h5>
+                                <p class="card-text">Follow industry leaders, engage in relevant conversations, and share curated content to establish your presence and connect with professionals globally.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-video text-primary mr-2"></i>Virtual Events</h5>
+                                <p class="card-text">Participate in webinars, virtual conferences, and online workshops to connect with industry professionals from the comfort of your home or office.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quote-block">
+                    <p class="h4">"Your network is your net worth. Investing time in building genuine relationships is one of the highest-return activities in business."</p>
+                    <p class="small text-right mb-0">— Emily Rodriguez, Business Networking Expert</p>
+                </div>
+                
+                <h2>Maintaining and Nurturing Your Network</h2>
+                <p>Building a network is just the beginning; maintaining these relationships requires ongoing effort and authentic engagement. Here are strategies to nurture your professional connections:</p>
+                
+                <h3 class="mt-4 font-weight-bold">Regular Engagement</h3>
+                <p>Stay in touch with your connections through periodic check-ins, congratulating them on achievements, sharing relevant articles, or simply reaching out to see how they're doing. Consistent, authentic interaction keeps relationships active and meaningful.</p>
+                
+                <h3 class="mt-4 font-weight-bold">Value Exchange</h3>
+                <p>Continuously look for ways to provide value to your network. This might include sharing industry insights, making introductions, offering feedback, or promoting their work. When you consistently give value, connections are more likely to reciprocate when you need assistance.</p>
+                
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Digital Networking" class="w-100 rounded-lg shadow">
+                
+                <h3 class="mt-4 font-weight-bold">Organize Your Contacts</h3>
+                <p>Use a system to track your professional relationships, including when you last connected, topics discussed, and follow-up items. CRM tools, spreadsheets, or networking apps can help you manage and nurture your growing network effectively.</p>
+                
+                <div class="author-info">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100&q=80" alt="Author" class="rounded-circle mr-4">
+                    <div>
+                        <h5 class="mb-1">About the Author</h5>
+                        <p class="mb-2">Michael Chen is a networking strategist and entrepreneur who has helped hundreds of professionals build meaningful connections. He founded ConnectPro, a consulting firm specializing in professional relationship building.</p>
+                        <div>
+                            <a href="#" class="text-primary mr-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-primary mr-2"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="text-primary"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Posts -->
+<section class="related-posts">
+    <div class="container">
+        <h2 class="text-center">Explore More Insights</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <a href="blog1.html" class="text-decoration-none">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Entrepreneurship">
+                            <div class="position-absolute top-0 right-0 m-3">
+                                <span class="badge badge-pill px-3 py-2" style="background: linear-gradient(to right, #3498db, #8e44ad); color: white;">Entrepreneurship</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle mr-2" alt="Author">
+                                <small class="text-muted">Santu Ghosh • March 1, 2024</small>
+                            </div>
+                            <h5 class="card-title">The Future of Entrepreneurship</h5>
+                            <p class="card-text">Explore emerging trends and innovations shaping tomorrow's business landscape.</p>
+                            <div class="d-flex align-items-center">
+                                <span class="btn btn-outline-primary">Read Article</span>
+                                <div class="ml-auto">
+                                    <i class="far fa-clock text-muted mr-1"></i>
+                                    <small class="text-muted">8 min read</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="blog3.html" class="text-decoration-none">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Financial Literacy">
+                            <div class="position-absolute top-0 right-0 m-3">
+                                <span class="badge badge-pill px-3 py-2" style="background: linear-gradient(to right, #3498db, #8e44ad); color: white;">Finance</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle mr-2" alt="Author">
+                                <small class="text-muted">Emily Rodriguez • Feb 25, 2024</small>
+                            </div>
+                            <h5 class="card-title">Financial Literacy Essentials</h5>
+                            <p class="card-text">Master the key financial concepts every entrepreneur needs to know for business success.</p>
+                            <div class="d-flex align-items-center">
+                                <span class="btn btn-outline-primary">Read Article</span>
+                                <div class="ml-auto">
+                                    <i class="far fa-clock text-muted mr-1"></i>
+                                    <small class="text-muted">12 min read</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="#" class="text-decoration-none">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Leadership">
+                            <div class="position-absolute top-0 right-0 m-3">
+                                <span class="badge badge-pill px-3 py-2" style="background: linear-gradient(to right, #3498db, #8e44ad); color: white;">Leadership</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle mr-2" alt="Author">
+                                <small class="text-muted">David Park • Feb 15, 2024</small>
+                            </div>
+                            <h5 class="card-title">Effective Leadership Skills</h5>
+                            <p class="card-text">Develop essential qualities to guide your team to success and drive organizational growth.</p>
+                            <div class="d-flex align-items-center">
+                                <span class="btn btn-outline-primary">Read Article</span>
+                                <div class="ml-auto">
+                                    <i class="far fa-clock text-muted mr-1"></i>
+                                    <small class="text-muted">11 min read</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-24 mt-5">
+    <div class="container">
+        <div class="row mb-16">
+            <div class="col-lg-5 mb-8 mb-lg-0">
+                <div class="pr-lg-5">
+                    <h3 class="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">MCA AEP</h3>
+                    <p class="text-gray-300 text-lg mb-8 leading-relaxed">Empowering future leaders through innovative business education and real-world entrepreneurship experiences.</p>
+                    <div class="social-links flex space-x-4">
+                        <a href="#" class="hover:transform hover:scale-110 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-3">
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                        <a href="#" class="hover:transform hover:scale-110 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-3">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="hover:transform hover:scale-110 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-3">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="hover:transform hover:scale-110 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-3">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="row">
+                    <div class="col-md-4 mb-8 mb-md-0">
+                        <h4 class="text-xl font-semibold mb-6 text-blue-400">Quick Links</h4>
+                        <ul class="space-y-3">
+                            <li><a href="index.html#about" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>About</a></li>
+                            <li><a href="index.html#features" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>Features</a></li>
+                            <li><a href="index.html#events" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>Events</a></li>
+                            <li><a href="index.html#blogs" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>Blogs</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 mb-8 mb-md-0">
+                        <h4 class="text-xl font-semibold mb-6 text-blue-400">Other Blogs</h4>
+                        <ul class="space-y-3">
+                            <li><a href="blog1.html" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>Future of Entrepreneurship</a></li>
+                            <li><a href="blog3.html" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>Financial Literacy</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 class="text-xl font-semibold mb-6 text-blue-400">Contact</h4>
+                        <ul class="space-y-3">
+                            <li class="text-gray-300 flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1.5 mr-3 text-blue-400"></i>
+                                <span>100 Technology Drive<br>Edison, NJ 08837</span>
+                            </li>
+                            <li class="text-gray-300 flex items-center">
+                                <i class="fas fa-envelope mr-3 text-blue-400"></i>
+                                <a href="mailto:contact@mcaaep.org" class="hover:text-white">contact@mcaaep.org</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 pt-8">
+            <div class="row items-center">
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <p class="text-gray-400">&copy; 2024 MCA AEP. All rights reserved. | Designed with <i class="fas fa-heart text-red-500"></i> by the AEP Team</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+    
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+</script>
+
+</body>
+</html> 

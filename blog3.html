@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Financial Literacy Essentials</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #3498db, #8e44ad);
+            border-radius: 10px;
+            border: 3px solid #f1f5f9;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #2980b9, #8e44ad);
+        }
+        
+        /* Firefox */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #3498db #f1f5f9;
+        }
+        
+        .navbar {
+            background-color: transparent;
+            padding: 15px 0;
+            transition: all 0.3s ease-in-out;
+            z-index: 1000;
+        }
+        
+        .navbar.scrolled {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled .nav-link {
+            color: #333 !important;
+        }
+        
+        .navbar .nav-link:hover {
+            color: white !important;
+        }
+        
+        .navbar.scrolled .nav-link:hover {
+            color: #3498db !important;
+        }
+        
+        .navbar .navbar-brand {
+            color: white;
+            font-weight: 700;
+        }
+        
+        .navbar.scrolled .navbar-brand {
+            color: #333;
+        }
+        
+        .navbar-toggler {
+            border: none;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+        }
+        
+        .navbar.scrolled .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+        }
+        
+        .blog-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-content h2 {
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .blog-content img {
+            margin: 2rem 0;
+        }
+        
+        .blog-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1565514020179-026b92b4c4b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+            margin-bottom: 3rem;
+        }
+        
+        .author-info {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .quote-block {
+            border-left: 5px solid #3498db;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        .related-posts {
+            background: linear-gradient(rgba(240, 248, 255, 0.9), rgba(248, 249, 250, 0.9)), url('https://images.unsplash.com/photo-1550305080-4e029753abcf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 5rem 0;
+            margin-top: 4rem;
+            position: relative;
+        }
+        
+        .related-posts:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #3498db, #8e44ad);
+        }
+        
+        .related-posts h2 {
+            font-weight: 700;
+            color: #2c3e50;
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+        
+        .related-posts h2:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #3498db, #8e44ad);
+        }
+        
+        .related-posts .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .related-posts .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .related-posts .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .related-posts .card-body {
+            padding: 1.75rem;
+        }
+        
+        .related-posts .card-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .related-posts .card-text {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+        }
+        
+        .related-posts .btn-outline-primary {
+            border-color: #3498db;
+            color: #3498db;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .related-posts .btn-outline-primary:hover {
+            background: linear-gradient(to right, #3498db, #8e44ad);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        @media (max-width: 767px) {
+            .related-posts .card {
+                margin-bottom: 2rem;
+            }
+        }
+        
+        .concept-card {
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .concept-card-header {
+            padding: 1.5rem;
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .concept-card-body {
+            padding: 1.5rem;
+        }
+        
+        .key-points {
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .key-points ul li {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold" href="index.html">AEP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#team">Team</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#events">Events</a></li>
+                <li class="nav-item"><a class="nav-link font-weight-bold" href="index.html#blogs">Insights</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Blog Header -->
+<header class="blog-header">
+    <div class="container text-center text-white">
+        <h1 class="display-4 font-weight-bold">Financial Literacy Essentials</h1>
+        <p class="lead mt-3">Key financial concepts every entrepreneur should master</p>
+        <div class="mt-4">
+            <span class="mr-3"><i class="far fa-calendar-alt mr-1"></i> February 25, 2024</span>
+            <span class="mr-3"><i class="far fa-user mr-1"></i> By Emily Rodriguez</span>
+            <span><i class="far fa-clock mr-1"></i> 12 min read</span>
+        </div>
+    </div>
+</header>
+
+<!-- Blog Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto blog-content">
+                <p class="lead font-weight-bold">Financial literacy is the foundation of business success, enabling entrepreneurs to make informed decisions, manage resources effectively, and build sustainable ventures. This comprehensive guide covers essential financial concepts that every business owner should understand.</p>
+                
+                <p>Many entrepreneurs launch businesses with brilliant ideas and strong technical skills but lack the financial knowledge needed to ensure long-term success. According to a U.S. Bank study, 82% of business failures are due to poor cash flow management or inadequate understanding of financial data. This article aims to demystify key financial concepts and provide practical insights for business owners.</p>
+                
+                <div class="key-points">
+                    <h4 class="mb-4">What You'll Learn</h4>
+                    <ul>
+                        <li><strong>Financial Statements:</strong> How to read and interpret balance sheets, income statements, and cash flow statements</li>
+                        <li><strong>Budgeting and Forecasting:</strong> Techniques for effective financial planning</li>
+                        <li><strong>Cash Flow Management:</strong> Strategies to maintain healthy liquidity</li>
+                        <li><strong>Financial Ratios:</strong> Key metrics to assess your business's health</li>
+                        <li><strong>Funding Options:</strong> Understanding different sources of capital</li>
+                    </ul>
+                </div>
+                
+                <h2>Understanding Financial Statements</h2>
+                <p>Financial statements provide a snapshot of your business's financial health and performance. They are essential tools for making informed decisions, securing funding, and communicating with stakeholders.</p>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="concept-card">
+                            <div class="concept-card-header">
+                                <h4 class="mb-0">Balance Sheet</h4>
+                            </div>
+                            <div class="concept-card-body">
+                                <p>Shows what a company owns (assets), owes (liabilities), and the owner's equity at a specific point in time. It follows the equation: Assets = Liabilities + Equity.</p>
+                                <p class="text-primary mb-0"><strong>Key Components:</strong></p>
+                                <ul class="mb-0">
+                                    <li>Assets (current and non-current)</li>
+                                    <li>Liabilities (current and long-term)</li>
+                                    <li>Owner's equity</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="concept-card">
+                            <div class="concept-card-header">
+                                <h4 class="mb-0">Income Statement</h4>
+                            </div>
+                            <div class="concept-card-body">
+                                <p>Also called the profit and loss statement, it shows revenue, expenses, and profit or loss over a specific period. It reveals whether a business is profitable.</p>
+                                <p class="text-primary mb-0"><strong>Key Components:</strong></p>
+                                <ul class="mb-0">
+                                    <li>Revenue (sales)</li>
+                                    <li>Cost of goods sold</li>
+                                    <li>Gross profit</li>
+                                    <li>Operating expenses</li>
+                                    <li>Net income/loss</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="concept-card">
+                            <div class="concept-card-header">
+                                <h4 class="mb-0">Cash Flow Statement</h4>
+                            </div>
+                            <div class="concept-card-body">
+                                <p>Tracks how cash flows in and out of a business over a specific period. Critical for understanding liquidity and operational sustainability.</p>
+                                <p class="text-primary mb-0"><strong>Key Components:</strong></p>
+                                <ul class="mb-0">
+                                    <li>Operating activities</li>
+                                    <li>Investing activities</li>
+                                    <li>Financing activities</li>
+                                    <li>Net change in cash</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Understanding these statements allows entrepreneurs to identify financial strengths and weaknesses, make informed decisions, and communicate effectively with investors and lenders. Regular review of financial statements is crucial for monitoring business performance and planning for growth.</p>
+                
+                <img src="https://images.unsplash.com/photo-1554260570-9140fd3b7614?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Financial Analysis" class="w-100 rounded-lg shadow">
+                
+                <h2>Budgeting and Forecasting</h2>
+                <p>Effective financial planning through budgeting and forecasting helps entrepreneurs allocate resources efficiently, plan for future expenses, and anticipate cash needs. These tools provide a roadmap for financial decision-making and help businesses stay on track toward their goals.</p>
+                
+                <h3 class="mt-4 font-weight-bold">Creating a Comprehensive Budget</h3>
+                <p>A well-designed budget serves as a financial blueprint for your business. It should include:</p>
+                
+                <ul class="mb-4">
+                    <li class="mb-2"><strong>Revenue projections:</strong> Realistic estimates of sales based on historical data, market research, and growth plans</li>
+                    <li class="mb-2"><strong>Fixed expenses:</strong> Costs that remain constant regardless of business activity (rent, salaries, insurance)</li>
+                    <li class="mb-2"><strong>Variable expenses:</strong> Costs that fluctuate with business activity (materials, commissions, shipping)</li>
+                    <li class="mb-2"><strong>Capital expenditures:</strong> Major purchases of assets like equipment or property</li>
+                    <li class="mb-2"><strong>Contingency funds:</strong> Reserves for unexpected expenses or opportunities</li>
+                </ul>
+                
+                <div class="quote-block">
+                    <p class="h4">"A budget is telling your money where to go instead of wondering where it went. For businesses, it's the difference between strategic growth and chaotic survival."</p>
+                    <p class="small text-right mb-0">— David Park, Financial Advisor</p>
+                </div>
+                
+                <h3 class="mt-4 font-weight-bold">Financial Forecasting Techniques</h3>
+                <p>Forecasting helps businesses anticipate future financial conditions and make proactive decisions. Key forecasting methods include:</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-chart-line text-primary mr-2"></i>Trend Analysis</h5>
+                                <p class="card-text">Using historical data to identify patterns and project future performance. Particularly useful for businesses with established operating history.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-percentage text-primary mr-2"></i>Percentage of Sales Method</h5>
+                                <p class="card-text">Projecting expenses and some assets as a percentage of forecasted sales. Simple but effective for many small businesses.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-code-branch text-primary mr-2"></i>Scenario Analysis</h5>
+                                <p class="card-text">Creating multiple forecasts based on different assumptions (best-case, worst-case, and most likely scenarios). Helps prepare for various outcomes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-random text-primary mr-2"></i>Monte Carlo Simulation</h5>
+                                <p class="card-text">A sophisticated method that uses probability distributions to model uncertainties in financial forecasts. Useful for complex business environments.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Financial Planning" class="w-100 rounded-lg shadow">
+                
+                <h2>Managing Cash Flow</h2>
+                <p>Cash flow management is crucial for maintaining liquidity and ensuring a business can meet its financial obligations. Even profitable businesses can fail if they run out of cash. Here are strategies to maintain healthy cash flow:</p>
+                
+                <h3 class="mt-4 font-weight-bold">Cash Flow Monitoring</h3>
+                <p>Regularly track cash inflows and outflows to identify patterns and potential cash crunches. A cash flow statement should be reviewed at least monthly, with more frequent monitoring for businesses with tight margins or seasonal fluctuations.</p>
+                
+                <h3 class="mt-4 font-weight-bold">Optimizing Receivables</h3>
+                <p>Implement strategies to ensure timely payment from customers:</p>
+                <ul class="mb-4">
+                    <li class="mb-2">Offer incentives for early payment (discounts for paying within 10 days)</li>
+                    <li class="mb-2">Implement clear payment terms and follow up promptly on overdue accounts</li>
+                    <li class="mb-2">Consider requiring deposits or progress payments for large orders or projects</li>
+                    <li class="mb-2">Streamline invoicing processes to reduce delays</li>
+                </ul>
+                
+                <h3 class="mt-4 font-weight-bold">Managing Payables</h3>
+                <p>Strategically manage outgoing payments to optimize cash position:</p>
+                <ul class="mb-4">
+                    <li class="mb-2">Negotiate favorable payment terms with suppliers</li>
+                    <li class="mb-2">Take advantage of early payment discounts when cash flow permits</li>
+                    <li class="mb-2">Stagger payment dates to avoid clustering of major expenses</li>
+                    <li class="mb-2">Maintain open communication with vendors during tight cash periods</li>
+                </ul>
+                
+                <h3 class="mt-4 font-weight-bold">Building Cash Reserves</h3>
+                <p>Establish an emergency fund to cover 3-6 months of operating expenses. This provides a buffer against unexpected events and opportunities for strategic investments when they arise.</p>
+                
+                <div class="author-info">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100&q=80" alt="Author" class="rounded-circle mr-4">
+                    <div>
+                        <h5 class="mb-1">About the Author</h5>
+                        <p class="mb-2">Emily Rodriguez is a certified financial analyst and business consultant. She specializes in helping entrepreneurs develop financial literacy and implement sound financial practices in their businesses.</p>
+                        <div>
+                            <a href="#" class="text-primary mr-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-primary mr-2"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="text-primary"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Posts -->
+<section class="related-posts">
+    <div class="container">
+        <h2 class="text-center">Explore More Insights</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <a href="blog1.html" class="text-decoration-none">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Entrepreneurship">
+                            <div class="position-absolute top-0 right-0 m-3">
+                                <span class="badge badge-pill px-3 py-2" style="background: linear-gradient(to right, #3498db, #8e44ad); color: white;">Entrepreneurship</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle mr-2" alt="Author">
+                                <small class="text-muted">Santu Ghosh • March 1, 2024</small>
+                            </div>
+                            <h5 class="card-title">The Future of Entrepreneurship</h5>
+                            <p class="card-text">Explore emerging trends and innovations shaping tomorrow's business landscape.</p>
+                            <div class="d-flex align-items-center">
+                                <span class="btn btn-outline-primary">Read Article</span>
+                                <div class="ml-auto">
+                                    <i class="far fa-clock text-muted mr-1"></i>
+                                    <small class="text-muted">8 min read</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="blog2.html" class="text-decoration-none">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Networking">
+                            <div class="position-absolute top-0 right-0 m-3">
+                                <span class="badge badge-pill px-3 py-2" style="background: linear-gradient(to right, #3498db, #8e44ad); color: white;">Networking</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle mr-2" alt="Author">
+                                <small class="text-muted">Michael Chen • Feb 28, 2024</small>
+                            </div>
+                            <h5 class="card-title">Building a Strong Business Network</h5>
+                            <p class="card-text">Discover proven strategies for creating meaningful professional connections that drive business growth.</p>
+                            <div class="d-flex align-items-center">
+                                <span class="btn btn-outline-primary">Read Article</span>
+                                <div class="ml-auto">
+                                    <i class="far fa-clock text-muted mr-1"></i>
+                                    <small class="text-muted">10 min read</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="#" class="text-decoration-none">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Investing">
+                            <div class="position-absolute top-0 right-0 m-3">
+                                <span class="badge badge-pill px-3 py-2" style="background: linear-gradient(to right, #3498db, #8e44ad); color: white;">Investing</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle mr-2" alt="Author">
+                                <small class="text-muted">David Park • Feb 18, 2024</small>
+                            </div>
+                            <h5 class="card-title">Investment Strategies for Entrepreneurs</h5>
+                            <p class="card-text">Learn how to build wealth beyond your business through strategic and diversified investing approaches.</p>
+                            <div class="d-flex align-items-center">
+                                <span class="btn btn-outline-primary">Read Article</span>
+                                <div class="ml-auto">
+                                    <i class="far fa-clock text-muted mr-1"></i>
+                                    <small class="text-muted">9 min read</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-24 mt-5">
+    <div class="container">
+        <div class="row mb-16">
+            <div class="col-lg-5 mb-8 mb-lg-0">
+                <div class="pr-lg-5">
+                    <h3 class="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">MCA AEP</h3>
+                    <p class="text-gray-300 text-lg mb-8 leading-relaxed">Empowering future leaders through innovative business education and real-world entrepreneurship experiences.</p>
+                    <div class="social-links flex space-x-4">
+                        <a href="#" class="hover:transform hover:scale-110 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-3">
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                        <a href="#" class="hover:transform hover:scale-110 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-3">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="hover:transform hover:scale-110 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-3">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="hover:transform hover:scale-110 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-3">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="row">
+                    <div class="col-md-4 mb-8 mb-md-0">
+                        <h4 class="text-xl font-semibold mb-6 text-blue-400">Quick Links</h4>
+                        <ul class="space-y-3">
+                            <li><a href="index.html#about" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>About</a></li>
+                            <li><a href="index.html#features" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>Features</a></li>
+                            <li><a href="index.html#events" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>Events</a></li>
+                            <li><a href="index.html#blogs" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>Blogs</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 mb-8 mb-md-0">
+                        <h4 class="text-xl font-semibold mb-6 text-blue-400">Other Blogs</h4>
+                        <ul class="space-y-3">
+                            <li><a href="blog1.html" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>Future of Entrepreneurship</a></li>
+                            <li><a href="blog2.html" class="text-gray-300 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-sm"></i>Business Networking</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 class="text-xl font-semibold mb-6 text-blue-400">Contact</h4>
+                        <ul class="space-y-3">
+                            <li class="text-gray-300 flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1.5 mr-3 text-blue-400"></i>
+                                <span>100 Technology Drive<br>Edison, NJ 08837</span>
+                            </li>
+                            <li class="text-gray-300 flex items-center">
+                                <i class="fas fa-envelope mr-3 text-blue-400"></i>
+                                <a href="mailto:contact@mcaaep.org" class="hover:text-white">contact@mcaaep.org</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 pt-8">
+            <div class="row items-center">
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <p class="text-gray-400">&copy; 2024 MCA AEP. All rights reserved. | Designed with <i class="fas fa-heart text-red-500"></i> by the AEP Team</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+    
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+</script>
+
+</body>
+</html> 
