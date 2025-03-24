@@ -338,7 +338,7 @@
                             <div class="text-sm text-gray-500 mb-2">March 1, 2024</div>
                             <h3 class="text-xl font-bold mb-2">The Future of Entrepreneurship</h3>
                             <p class="text-gray-600 mb-4">Explore emerging trends and opportunities in the entrepreneurial landscape.</p>
-                            <a href="blog1.html" class="text-primary-600 hover:text-primary-700 font-medium">Read More →</a>
+                            <a href="blog1.html" class="read-more-btn">Read More <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                 </div>
@@ -351,7 +351,7 @@
                             <div class="text-sm text-gray-500 mb-2">February 28, 2024</div>
                             <h3 class="text-xl font-bold mb-2">Building a Strong Business Network</h3>
                             <p class="text-gray-600 mb-4">Tips and strategies for effective networking in the business world.</p>
-                            <a href="blog2.html" class="text-primary-600 hover:text-primary-700 font-medium">Read More →</a>
+                            <a href="blog2.html" class="read-more-btn">Read More <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                 </div>
@@ -364,7 +364,7 @@
                             <div class="text-sm text-gray-500 mb-2">February 25, 2024</div>
                             <h3 class="text-xl font-bold mb-2">Financial Literacy Essentials</h3>
                             <p class="text-gray-600 mb-4">Key concepts every entrepreneur should understand about finance.</p>
-                            <a href="blog3.html" class="text-primary-600 hover:text-primary-700 font-medium">Read More →</a>
+                            <a href="blog3.html" class="read-more-btn">Read More <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                 </div>
@@ -547,6 +547,36 @@
         .testimonial-item {
             flex: 0 0 100%;
         }
+    }
+    
+    /* Read More Button Styling */
+    .read-more-btn {
+        display: inline-flex;
+        align-items: center;
+        background: linear-gradient(135deg, #4F46E5, #818CF8);
+        color: white;
+        padding: 0.5rem 1.25rem;
+        border-radius: 30px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+    }
+    
+    .read-more-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+    
+    .read-more-btn .fa-arrow-right {
+        margin-left: 0.5rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .read-more-btn:hover .fa-arrow-right {
+        transform: translateX(4px);
     }
     </style>
 
